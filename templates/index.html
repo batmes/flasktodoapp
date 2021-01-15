@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>ToDo App</title>
+</head>
+<body>
+    <div stlye="margin-top: 100px" class="container">
+        <p style="color: red; font-size: 50px; text-align:center; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif" >YAPILACAKLAR LİSTESİ</p> <!--H3 BOYUTUNDA TODO LİST BAŞLIĞIMIZ-->
+        <hr><!--ÇİZGİ KOMUTUMUZ-->
+
+        <form action="/add" method="post" ><!-- EKLEME FORMUMUZ -->
+            <div class="form-group">
+                <label for="formGroupExampleInput">Yapılacaklar Ekleme</label> <!-- BAŞLIK -->
+                <input type="text" class="form-control" name="title" id="formGroupExampleInput" style="width: 350px;" placeholder="Yapılacak Giriniz..."><!-- YAPILACAKLARIN GİRİLMESİNİ SAĞLAYAN TEXBOX KOMUTU -->
+                <br>
+                <button type="submit" class="btn btn-danger" style="width: 150px;">Listeye Ekle</button> <!-- TODO EKLEME İŞLEMİNİ YAPACAK BUTONUMUZ. -->
+            </div>
+        </form>
+    </div>
+    {% if todos == [] %}
+    <div class="alert alert-warning" role="alert">
+        Herhangi bir To Do Bulunmuyor...
+    </div>
+    {% else %}
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">YAPILACAKLAR</th>
+            <th scope="col">YAPILMA DURUMU</th>
+            <th scope="col">Durum Güncelle</th>
+            <th scope="col">To Do Sil</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for todo in todos %}
+          <tr>
+            <th scope="row">{{todo.id}}</th> <!--TABLODA İD KISMI-->
+            <td>{{todo.title}}</td>          <!--TABLODA TİTLE KISMI-->
+            {% if todo.complete == False %}  <!--KOŞUL DÖNGÜMÜZ-->
+            <td>Tamamlanmadı</td>  <!--KOŞUL SAĞLANIYORSA TAMAMLANMADI YAZACAK-->
+            {% else %}
+            <td>Tamamlandı</td> <!--KOŞUL SAĞLANMIYORSA TAMAMLANDI YAZACAK-->
+            {% endif %} <!--KOŞUL BLOĞUMUZU SONLANDIRMA-->
+            <td><a href="/complete/{{todo.id}}" class="btn btn-danger">Durum Güncelle</a></td>
+            <td><a href="/delete/{{todo.id}}" class="btn btn-danger">Sil</a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% endif %}
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
